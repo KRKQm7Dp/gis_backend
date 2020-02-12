@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--&lt;!&ndash; 用于输出日志 log4j:LOG4J SLF4J &ndash;&gt;-->
+    <!--<settings>-->
+        <!--<setting name="logImpl" value="LOG4J2"/>-->
+    <!--</settings>-->
+
+    <!--&lt;!&ndash; 别名定义 &ndash;&gt;-->
+    <!--<typeAliases>-->
+        <!--<package name="com.gis_server.pojo"/>-->
+    <!--</typeAliases>-->
+
+    <!--<mappers>-->
+        <!--&lt;!&ndash;<mapper resource="com/gis/mapper/UserMapper.xml" />&ndash;&gt;-->
+    <!--</mappers>-->
+</configuration>

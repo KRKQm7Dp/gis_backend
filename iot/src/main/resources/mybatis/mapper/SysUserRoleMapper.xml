@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gis_server.mapper.SysUserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.gis_server.pojo.SysUserRole">
+    <constructor>
+      <arg column="UID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="RID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.gis_server.pojo.SysUserRole">
+    insert into sys_user_role (UID, RID)
+    values (#{uid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gis_server.pojo.SysUserRole">
+    insert into sys_user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        UID,
+      </if>
+      <if test="rid != null">
+        RID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null">
+        #{rid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteByUserId" parameterType="java.lang.Integer">
+    delete from sys_user_role as ur
+    where ur.UID = #{uLoginId, jdbcType=INTEGER}
+  </delete>
+</mapper>

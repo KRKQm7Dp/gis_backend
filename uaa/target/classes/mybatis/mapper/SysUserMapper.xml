@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gis_server.mapper.SysUserMapper">
+  <resultMap id="BaseResultMap" type="com.gis_server.pojo.SysUser">
+    <constructor>
+      <idArg column="U_ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="U_LoginID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_NickName" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_PassWord" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_SignaTure" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_Sex" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="U_Birthday" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="U_Telephone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_Name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_Email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_Intro" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_HeadPortrait" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_ShengXiao" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="U_Age" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="U_Constellation" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="U_BloodType" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_SchoolTag" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_Vocation" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_NationID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="U_ProvinceID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="U_CityID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="U_FriendshipPolicyID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="U_UserStateID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="U_FriendPolicyQuestion" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_FriendPolicyAnswer" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="U_FriendPolicyPassword" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="enabled" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="not_expired" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="account_not_locked" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="credentials_not_expired" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="create_user" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="update_user" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="last_login_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    U_ID, U_LoginID, U_NickName, U_PassWord, U_SignaTure, U_Sex, U_Birthday, U_Telephone,
+    U_Name, U_Email, U_Intro, U_HeadPortrait, U_ShengXiao, U_Age, U_Constellation, U_BloodType,
+    U_SchoolTag, U_Vocation, U_NationID, U_ProvinceID, U_CityID, U_FriendshipPolicyID,
+    U_UserStateID, U_FriendPolicyQuestion, U_FriendPolicyAnswer, U_FriendPolicyPassword,
+    enabled, not_expired, account_not_locked, credentials_not_expired, create_time, update_time,
+    create_user, update_user, last_login_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_user
+    where U_ID = #{uId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByLoginId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_user
+    where U_LoginID = #{uLoginid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_user
+  </select>
+  <select id="countUser" resultType="java.lang.Long">
+    select count(*)
+    from sys_user
+  </select>
+  <select id="selectUserByPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_user
+    limit #{pageNum}, #{pageSize}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_user
+    where U_ID = #{uId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gis_server.pojo.SysUser">
+    insert into sys_user (U_ID, U_LoginID, U_NickName,
+      U_PassWord, U_SignaTure, U_Sex,
+      U_Birthday, U_Telephone, U_Name,
+      U_Email, U_Intro, U_HeadPortrait,
+      U_ShengXiao, U_Age, U_Constellation,
+      U_BloodType, U_SchoolTag, U_Vocation,
+      U_NationID, U_ProvinceID, U_CityID,
+      U_FriendshipPolicyID, U_UserStateID, U_FriendPolicyQuestion,
+      U_FriendPolicyAnswer, U_FriendPolicyPassword,
+      enabled, not_expired, account_not_locked,
+      credentials_not_expired, create_time, update_time,
+      create_user, update_user, last_login_time
+      )
+    values (#{uId,jdbcType=INTEGER}, #{uLoginid,jdbcType=VARCHAR}, #{uNickname,jdbcType=VARCHAR},
+      #{uPassword,jdbcType=VARCHAR}, #{uSignature,jdbcType=VARCHAR}, #{uSex,jdbcType=BIT},
+      #{uBirthday,jdbcType=TIMESTAMP}, #{uTelephone,jdbcType=VARCHAR}, #{uName,jdbcType=VARCHAR},
+      #{uEmail,jdbcType=VARCHAR}, #{uIntro,jdbcType=VARCHAR}, #{uHeadportrait,jdbcType=VARCHAR},
+      #{uShengxiao,jdbcType=CHAR}, #{uAge,jdbcType=INTEGER}, #{uConstellation,jdbcType=CHAR},
+      #{uBloodtype,jdbcType=VARCHAR}, #{uSchooltag,jdbcType=VARCHAR}, #{uVocation,jdbcType=VARCHAR},
+      #{uNationid,jdbcType=INTEGER}, #{uProvinceid,jdbcType=INTEGER}, #{uCityid,jdbcType=INTEGER},
+      #{uFriendshippolicyid,jdbcType=INTEGER}, #{uUserstateid,jdbcType=INTEGER}, #{uFriendpolicyquestion,jdbcType=VARCHAR},
+      #{uFriendpolicyanswer,jdbcType=VARCHAR}, #{uFriendpolicypassword,jdbcType=VARCHAR},
+      #{enabled,jdbcType=BIT}, #{notExpired,jdbcType=BIT}, #{accountNotLocked,jdbcType=BIT},
+      #{credentialsNotExpired,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{createUser,jdbcType=INTEGER}, #{updateUser,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gis_server.pojo.SysUser">
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        U_ID,
+      </if>
+      <if test="uLoginid != null">
+        U_LoginID,
+      </if>
+      <if test="uNickname != null">
+        U_NickName,
+      </if>
+      <if test="uPassword != null">
+        U_PassWord,
+      </if>
+      <if test="uSignature != null">
+        U_SignaTure,
+      </if>
+      <if test="uSex != null">
+        U_Sex,
+      </if>
+      <if test="uBirthday != null">
+        U_Birthday,
+      </if>
+      <if test="uTelephone != null">
+        U_Telephone,
+      </if>
+      <if test="uName != null">
+        U_Name,
+      </if>
+      <if test="uEmail != null">
+        U_Email,
+      </if>
+      <if test="uIntro != null">
+        U_Intro,
+      </if>
+      <if test="uHeadportrait != null">
+        U_HeadPortrait,
+      </if>
+      <if test="uShengxiao != null">
+        U_ShengXiao,
+      </if>
+      <if test="uAge != null">
+        U_Age,
+      </if>
+      <if test="uConstellation != null">
+        U_Constellation,
+      </if>
+      <if test="uBloodtype != null">
+        U_BloodType,
+      </if>
+      <if test="uSchooltag != null">
+        U_SchoolTag,
+      </if>
+      <if test="uVocation != null">
+        U_Vocation,
+      </if>
+      <if test="uNationid != null">
+        U_NationID,
+      </if>
+      <if test="uProvinceid != null">
+        U_ProvinceID,
+      </if>
+      <if test="uCityid != null">
+        U_CityID,
+      </if>
+      <if test="uFriendshippolicyid != null">
+        U_FriendshipPolicyID,
+      </if>
+      <if test="uUserstateid != null">
+        U_UserStateID,
+      </if>
+      <if test="uFriendpolicyquestion != null">
+        U_FriendPolicyQuestion,
+      </if>
+      <if test="uFriendpolicyanswer != null">
+        U_FriendPolicyAnswer,
+      </if>
+      <if test="uFriendpolicypassword != null">
+        U_FriendPolicyPassword,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+      <if test="notExpired != null">
+        not_expired,
+      </if>
+      <if test="accountNotLocked != null">
+        account_not_locked,
+      </if>
+      <if test="credentialsNotExpired != null">
+        credentials_not_expired,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="uLoginid != null">
+        #{uLoginid,jdbcType=VARCHAR},
+      </if>
+      <if test="uNickname != null">
+        #{uNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uSignature != null">
+        #{uSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="uSex != null">
+        #{uSex,jdbcType=BIT},
+      </if>
+      <if test="uBirthday != null">
+        #{uBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uTelephone != null">
+        #{uTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="uName != null">
+        #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null">
+        #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uIntro != null">
+        #{uIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="uHeadportrait != null">
+        #{uHeadportrait,jdbcType=VARCHAR},
+      </if>
+      <if test="uShengxiao != null">
+        #{uShengxiao,jdbcType=CHAR},
+      </if>
+      <if test="uAge != null">
+        #{uAge,jdbcType=INTEGER},
+      </if>
+      <if test="uConstellation != null">
+        #{uConstellation,jdbcType=CHAR},
+      </if>
+      <if test="uBloodtype != null">
+        #{uBloodtype,jdbcType=VARCHAR},
+      </if>
+      <if test="uSchooltag != null">
+        #{uSchooltag,jdbcType=VARCHAR},
+      </if>
+      <if test="uVocation != null">
+        #{uVocation,jdbcType=VARCHAR},
+      </if>
+      <if test="uNationid != null">
+        #{uNationid,jdbcType=INTEGER},
+      </if>
+      <if test="uProvinceid != null">
+        #{uProvinceid,jdbcType=INTEGER},
+      </if>
+      <if test="uCityid != null">
+        #{uCityid,jdbcType=INTEGER},
+      </if>
+      <if test="uFriendshippolicyid != null">
+        #{uFriendshippolicyid,jdbcType=INTEGER},
+      </if>
+      <if test="uUserstateid != null">
+        #{uUserstateid,jdbcType=INTEGER},
+      </if>
+      <if test="uFriendpolicyquestion != null">
+        #{uFriendpolicyquestion,jdbcType=VARCHAR},
+      </if>
+      <if test="uFriendpolicyanswer != null">
+        #{uFriendpolicyanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="uFriendpolicypassword != null">
+        #{uFriendpolicypassword,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=BIT},
+      </if>
+      <if test="notExpired != null">
+        #{notExpired,jdbcType=BIT},
+      </if>
+      <if test="accountNotLocked != null">
+        #{accountNotLocked,jdbcType=BIT},
+      </if>
+      <if test="credentialsNotExpired != null">
+        #{credentialsNotExpired,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gis_server.pojo.SysUser">
+    update sys_user
+    <set>
+      <if test="uLoginid != null">
+        U_LoginID = #{uLoginid,jdbcType=VARCHAR},
+      </if>
+      <if test="uNickname != null">
+        U_NickName = #{uNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        U_PassWord = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uSignature != null">
+        U_SignaTure = #{uSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="uSex != null">
+        U_Sex = #{uSex,jdbcType=BIT},
+      </if>
+      <if test="uBirthday != null">
+        U_Birthday = #{uBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uTelephone != null">
+        U_Telephone = #{uTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="uName != null">
+        U_Name = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null">
+        U_Email = #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uIntro != null">
+        U_Intro = #{uIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="uHeadportrait != null">
+        U_HeadPortrait = #{uHeadportrait,jdbcType=VARCHAR},
+      </if>
+      <if test="uShengxiao != null">
+        U_ShengXiao = #{uShengxiao,jdbcType=CHAR},
+      </if>
+      <if test="uAge != null">
+        U_Age = #{uAge,jdbcType=INTEGER},
+      </if>
+      <if test="uConstellation != null">
+        U_Constellation = #{uConstellation,jdbcType=CHAR},
+      </if>
+      <if test="uBloodtype != null">
+        U_BloodType = #{uBloodtype,jdbcType=VARCHAR},
+      </if>
+      <if test="uSchooltag != null">
+        U_SchoolTag = #{uSchooltag,jdbcType=VARCHAR},
+      </if>
+      <if test="uVocation != null">
+        U_Vocation = #{uVocation,jdbcType=VARCHAR},
+      </if>
+      <if test="uNationid != null">
+        U_NationID = #{uNationid,jdbcType=INTEGER},
+      </if>
+      <if test="uProvinceid != null">
+        U_ProvinceID = #{uProvinceid,jdbcType=INTEGER},
+      </if>
+      <if test="uCityid != null">
+        U_CityID = #{uCityid,jdbcType=INTEGER},
+      </if>
+      <if test="uFriendshippolicyid != null">
+        U_FriendshipPolicyID = #{uFriendshippolicyid,jdbcType=INTEGER},
+      </if>
+      <if test="uUserstateid != null">
+        U_UserStateID = #{uUserstateid,jdbcType=INTEGER},
+      </if>
+      <if test="uFriendpolicyquestion != null">
+        U_FriendPolicyQuestion = #{uFriendpolicyquestion,jdbcType=VARCHAR},
+      </if>
+      <if test="uFriendpolicyanswer != null">
+        U_FriendPolicyAnswer = #{uFriendpolicyanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="uFriendpolicypassword != null">
+        U_FriendPolicyPassword = #{uFriendpolicypassword,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+      <if test="notExpired != null">
+        not_expired = #{notExpired,jdbcType=BIT},
+      </if>
+      <if test="accountNotLocked != null">
+        account_not_locked = #{accountNotLocked,jdbcType=BIT},
+      </if>
+      <if test="credentialsNotExpired != null">
+        credentials_not_expired = #{credentialsNotExpired,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where U_ID = #{uId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gis_server.pojo.SysUser">
+    update sys_user
+    set U_LoginID = #{uLoginid,jdbcType=VARCHAR},
+      U_NickName = #{uNickname,jdbcType=VARCHAR},
+      U_PassWord = #{uPassword,jdbcType=VARCHAR},
+      U_SignaTure = #{uSignature,jdbcType=VARCHAR},
+      U_Sex = #{uSex,jdbcType=BIT},
+      U_Birthday = #{uBirthday,jdbcType=TIMESTAMP},
+      U_Telephone = #{uTelephone,jdbcType=VARCHAR},
+      U_Name = #{uName,jdbcType=VARCHAR},
+      U_Email = #{uEmail,jdbcType=VARCHAR},
+      U_Intro = #{uIntro,jdbcType=VARCHAR},
+      U_HeadPortrait = #{uHeadportrait,jdbcType=VARCHAR},
+      U_ShengXiao = #{uShengxiao,jdbcType=CHAR},
+      U_Age = #{uAge,jdbcType=INTEGER},
+      U_Constellation = #{uConstellation,jdbcType=CHAR},
+      U_BloodType = #{uBloodtype,jdbcType=VARCHAR},
+      U_SchoolTag = #{uSchooltag,jdbcType=VARCHAR},
+      U_Vocation = #{uVocation,jdbcType=VARCHAR},
+      U_NationID = #{uNationid,jdbcType=INTEGER},
+      U_ProvinceID = #{uProvinceid,jdbcType=INTEGER},
+      U_CityID = #{uCityid,jdbcType=INTEGER},
+      U_FriendshipPolicyID = #{uFriendshippolicyid,jdbcType=INTEGER},
+      U_UserStateID = #{uUserstateid,jdbcType=INTEGER},
+      U_FriendPolicyQuestion = #{uFriendpolicyquestion,jdbcType=VARCHAR},
+      U_FriendPolicyAnswer = #{uFriendpolicyanswer,jdbcType=VARCHAR},
+      U_FriendPolicyPassword = #{uFriendpolicypassword,jdbcType=VARCHAR},
+      enabled = #{enabled,jdbcType=BIT},
+      not_expired = #{notExpired,jdbcType=BIT},
+      account_not_locked = #{accountNotLocked,jdbcType=BIT},
+      credentials_not_expired = #{credentialsNotExpired,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=INTEGER},
+      update_user = #{updateUser,jdbcType=INTEGER},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
+    where U_ID = #{uId,jdbcType=INTEGER}
+  </update>
+</mapper>
