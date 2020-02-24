@@ -4,6 +4,7 @@ import com.gis_server.pojo.Message;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MsgUtils {
@@ -37,7 +38,7 @@ public class MsgUtils {
         jsonObject.put(TO, msg.getmTouserid());
         jsonObject.put(MESSAGE_TYPE, msg.getmMessagestypeid());
         jsonObject.put(MESSSAGE_CONTENT, msg.getmPostmessages());
-        jsonObject.put(SEND_TIME, msg.getmTime());
+        jsonObject.put(SEND_TIME, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(msg.getmTime()));
         jsonObject.put(MESSAGE_STATUS, msg.getmStatus());
         jsonObject.put(FROM_USER_HEADPORTRAIT, msg.getmFromUserHeadPortrait());
         jsonObject.put(FROM_USER_NICKNAME, msg.getmFromUserNickName());

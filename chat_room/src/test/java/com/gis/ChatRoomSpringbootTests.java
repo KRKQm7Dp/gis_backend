@@ -12,6 +12,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.ResourceUtils;
 
 import java.io.FileNotFoundException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.ZoneOffset;
 import java.util.Date;
 
@@ -53,6 +55,11 @@ public class ChatRoomSpringbootTests {
     @Test
     public void propertiesTest(){
         System.out.println(context_path);
+    }
+
+    @Test
+    public void dateTest() throws ParseException {
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("Mon Feb 24 17:41:14 CST 2020"));
     }
 
 }
