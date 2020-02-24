@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gis_server.mapper.SysRolePermissionMapper">
+  <resultMap id="BaseResultMap" type="com.gis_server.pojo.SysRolePermission">
+    <constructor>
+      <idArg column="RID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="PID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.gis_server.pojo.SysRolePermission">
+    delete from sys_role_permission
+    where RID = #{rid,jdbcType=INTEGER}
+      and PID = #{pid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByRoleId" parameterType="java.lang.Integer">
+    delete from sys_role_permission
+    where RID = #{roleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gis_server.pojo.SysRolePermission">
+    insert into sys_role_permission (RID, PID)
+    values (#{rid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertLoop">
+    insert into sys_role_permission (RID, PID) values
+    <foreach collection="permissionIds" item="permissionId" separator=",">
+      (#{roleId,jdbcType=INTEGER}, #{permissionId,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.gis_server.pojo.SysRolePermission">
+    insert into sys_role_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        RID,
+      </if>
+      <if test="pid != null">
+        PID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

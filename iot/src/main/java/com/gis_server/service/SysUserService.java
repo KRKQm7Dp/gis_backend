@@ -19,4 +19,6 @@ public interface SysUserService {
 
     Integer deleteUser(Integer id);
 
+    SysUser queryUserByLoginID(String loginId);
+
 }

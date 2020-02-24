@@ -6,9 +6,10 @@ import java.time.format.DateTimeFormatter;
 
 public class DateUtils {
 
-    public static String getNow() {
+    //"yyyy-MM-dd HH:mm:ss"
+    public static String getNow(String pattern) {
         LocalDateTime date = LocalDateTime.now();
-        String now = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String now = date.format(DateTimeFormatter.ofPattern(pattern));
         return now;
     }
 

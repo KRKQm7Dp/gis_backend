@@ -1,6 +1,7 @@
 package com.gis_server.mapper;
 
 
+import com.gis_server.dto.RoleDto;
 import com.gis_server.pojo.SysRole;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,6 +17,8 @@ public interface SysRoleMapper {
     SysRole selectByPrimaryKey(Integer id);
 
     List<SysRole> selectRoleByPage(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+
+    List<RoleDto> selectRoleDtoByPage(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
     long countRole();
 

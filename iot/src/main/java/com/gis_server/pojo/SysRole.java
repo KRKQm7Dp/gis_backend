@@ -46,7 +46,6 @@ public class SysRole {
         return "SysRole{" +
                 "id=" + id +
                 ", roleName='" + roleName + '\'' +
-                ", roleDesc='" + roleDesc + '\'' +
-                '}';
+                ", roleDesc='" + roleDesc + "}";
     }
 }

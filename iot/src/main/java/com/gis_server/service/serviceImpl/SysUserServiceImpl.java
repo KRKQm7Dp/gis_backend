@@ -9,6 +9,7 @@ import com.gis_server.pojo.SysUserRole;
 import com.gis_server.service.SysRoleService;
 import com.gis_server.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +55,7 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public Integer addUser(SysUser user) {
+        user.setuPassword(BCrypt.hashpw(user.getuPassword(), BCrypt.gensalt()));
         Integer status = sysUserMapper.insertSelective(user);
         if(status > 0){
             user.getRoles().forEach(sysRole -> {
@@ -77,5 +79,11 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public Integer deleteUser(Integer id) {
         return sysUserMapper.deleteByPrimaryKey(id);
+    }
+
+
+    @Override
+    public SysUser queryUserByLoginID(String loginId) {
+        return sysUserMapper.selectByLoginId(loginId);
     }
 }

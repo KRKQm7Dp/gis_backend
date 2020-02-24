@@ -8,6 +8,14 @@
       <arg column="ROLE_DESC" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
+  <resultMap id="RoleDtoResultMap" type="com.gis_server.dto.RoleDto">
+    <id column="ID" property="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    <result column="ROLE_NAME" property="roleName" javaType="java.lang.String" jdbcType="VARCHAR" />
+    <result column="ROLE_DESC" property="roleDesc" javaType="java.lang.String" jdbcType="VARCHAR" />
+    <collection property="permissionIds" ofType="java.lang.Integer">
+      <result column="PID"/>
+    </collection>
+  </resultMap>
   <sql id="Base_Column_List">
     ID, ROLE_NAME, ROLE_DESC
   </sql>
@@ -22,6 +30,13 @@
     <include refid="Base_Column_List" />
     from sys_role
     limit #{pageNum}, #{pageSize}
+  </select>
+  <select id="selectRoleDtoByPage" resultMap="RoleDtoResultMap">
+    select roles.ID, roles.ROLE_NAME, roles.ROLE_DESC, srp.PID
+    from
+    (select * from sys_role limit #{pageNum}, #{pageSize}) as roles
+    left join sys_role_permission as srp
+    on roles.ID = srp.RID
   </select>
   <select id="countRole" resultType="java.lang.Long">
     select count(*)
@@ -46,7 +61,7 @@
     values (#{id,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.gis_server.pojo.SysRole">
+  <insert id="insertSelective" parameterType="com.gis_server.pojo.SysRole" useGeneratedKeys="true" keyProperty="id">
     insert into sys_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

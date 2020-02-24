@@ -14,6 +14,6 @@
     <!--</typeAliases>-->
 
     <!--<mappers>-->
-        <!--&lt;!&ndash;<mapper resource="com/gis/mapper/UserMapper.xml" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<mapper resource="com/gis_server/mapper/UserMapper.xml" />&ndash;&gt;-->
     <!--</mappers>-->
 </configuration>

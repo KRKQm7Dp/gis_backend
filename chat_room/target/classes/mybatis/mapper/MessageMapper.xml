@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gis_server.mapper.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.gis_server.pojo.Message">
+    <constructor>
+      <idArg column="M_ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="M_status" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="M_Time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="M_MessagesTypeID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="M_FromUserID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="M_ToUserID" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.gis_server.pojo.Message">
+    <constructor>
+      <idArg column="M_ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="M_status" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="M_Time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="M_MessagesTypeID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="M_FromUserID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="M_ToUserID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="M_PostMessages" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    M_ID, M_status, M_Time, M_MessagesTypeID, M_FromUserID, M_ToUserID
+  </sql>
+  <sql id="Blob_Column_List">
+    M_PostMessages
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from messages
+    where M_ID = #{mId,jdbcType=INTEGER}
+  </select>
+  <select id="queryMsgByPage" resultMap="ResultMapWithBLOBs">
+      select * from messages
+      where M_FromUserID=#{from,jdbcType=VARCHAR}
+      and M_ToUserID=#{to,jdbcType=VARCHAR}
+      and M_Time &lt; #{date,jdbcType=TIMESTAMP}
+      order by M_Time desc
+      limit 0, #{msgNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from messages
+    where M_ID = #{mId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gis_server.pojo.Message">
+    insert into messages (M_ID, M_status, M_Time,
+      M_MessagesTypeID, M_FromUserID, M_ToUserID,
+      M_PostMessages)
+    values (#{mId,jdbcType=INTEGER}, #{mStatus,jdbcType=BIT}, #{mTime,jdbcType=TIMESTAMP},
+      #{mMessagestypeid,jdbcType=INTEGER}, #{mFromuserid,jdbcType=VARCHAR}, #{mTouserid,jdbcType=VARCHAR},
+      #{mPostmessages,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gis_server.pojo.Message">
+    insert into messages
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mId != null">
+        M_ID,
+      </if>
+      <if test="mStatus != null">
+        M_status,
+      </if>
+      <if test="mTime != null">
+        M_Time,
+      </if>
+      <if test="mMessagestypeid != null">
+        M_MessagesTypeID,
+      </if>
+      <if test="mFromuserid != null">
+        M_FromUserID,
+      </if>
+      <if test="mTouserid != null">
+        M_ToUserID,
+      </if>
+      <if test="mPostmessages != null">
+        M_PostMessages,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mId != null">
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="mStatus != null">
+        #{mStatus,jdbcType=BIT},
+      </if>
+      <if test="mTime != null">
+        #{mTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mMessagestypeid != null">
+        #{mMessagestypeid,jdbcType=INTEGER},
+      </if>
+      <if test="mFromuserid != null">
+        #{mFromuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="mTouserid != null">
+        #{mTouserid,jdbcType=VARCHAR},
+      </if>
+      <if test="mPostmessages != null">
+        #{mPostmessages,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gis_server.pojo.Message">
+    update messages
+    <set>
+      <if test="mStatus != null">
+        M_status = #{mStatus,jdbcType=BIT},
+      </if>
+      <if test="mTime != null">
+        M_Time = #{mTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mMessagestypeid != null">
+        M_MessagesTypeID = #{mMessagestypeid,jdbcType=INTEGER},
+      </if>
+      <if test="mFromuserid != null">
+        M_FromUserID = #{mFromuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="mTouserid != null">
+        M_ToUserID = #{mTouserid,jdbcType=VARCHAR},
+      </if>
+      <if test="mPostmessages != null">
+        M_PostMessages = #{mPostmessages,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where M_ID = #{mId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gis_server.pojo.Message">
+    update messages
+    set M_status = #{mStatus,jdbcType=BIT},
+      M_Time = #{mTime,jdbcType=TIMESTAMP},
+      M_MessagesTypeID = #{mMessagestypeid,jdbcType=INTEGER},
+      M_FromUserID = #{mFromuserid,jdbcType=VARCHAR},
+      M_ToUserID = #{mTouserid,jdbcType=VARCHAR},
+      M_PostMessages = #{mPostmessages,jdbcType=LONGVARCHAR}
+    where M_ID = #{mId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gis_server.pojo.Message">
+    update messages
+    set M_status = #{mStatus,jdbcType=BIT},
+      M_Time = #{mTime,jdbcType=TIMESTAMP},
+      M_MessagesTypeID = #{mMessagestypeid,jdbcType=INTEGER},
+      M_FromUserID = #{mFromuserid,jdbcType=VARCHAR},
+      M_ToUserID = #{mTouserid,jdbcType=VARCHAR}
+    where M_ID = #{mId,jdbcType=INTEGER}
+  </update>
+</mapper>

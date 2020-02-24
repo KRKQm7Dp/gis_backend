@@ -4,10 +4,8 @@ package com.gis_server.config.oauth;
 import com.gis_server.config.handler.AuthExceptionEntryPoint;
 import com.gis_server.config.handler.CustomAccessDeniedHandler;
 import com.gis_server.config.handler.CustomLogoutSuccessHandler;
-import com.gis_server.filter.MyCorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,14 +15,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
-import javax.annotation.Resource;
-
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    public static final String RESOURCE_ID = "order";
+    public static final String RESOURCE_ID = "IOT";
 
 
     @Autowired
@@ -51,20 +47,24 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-
+        http.headers().frameOptions().disable();
         http.cors().and().csrf().disable();
         http.formLogin().permitAll()
                 .and()
                 .logout().permitAll()
                 .logoutUrl("/logout")
                 .logoutSuccessHandler(customLogoutSuccessHandler)
-                .deleteCookies("JSESSIONID")
+                .deleteCookies("IOT_SESSIONID")
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/druid/**").permitAll()
                 .antMatchers("/oauth/**").permitAll()
                 .antMatchers("/login*").permitAll()
+                .antMatchers("/api/routes").permitAll()
+                .antMatchers("/chat").permitAll()
+                .antMatchers("/css/**", "/emoji_plugin/**", "/head_img/**", "/img/**", "/js/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

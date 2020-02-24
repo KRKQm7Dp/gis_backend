@@ -44,6 +44,10 @@ public class UserDetailService implements UserDetailsService {
 
         UserDetails userDetails = new User(sysUser.getuLoginid(),
                 sysUser.getuPassword(),
+                sysUser.getEnabled(),
+                sysUser.getNotExpired(),
+                sysUser.getCredentialsNotExpired(),
+                sysUser.getAccountNotLocked(),
                 authorities);
         return userDetails;
     }

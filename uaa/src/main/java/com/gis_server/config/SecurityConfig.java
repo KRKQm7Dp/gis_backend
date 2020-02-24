@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessHandler(customLogoutSuccessHandler)
-                .deleteCookies("JSESSIONID")
+                .deleteCookies("UAA_SESSIONID")
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -84,8 +84,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public PasswordEncoder passwordEncoder(){
-    //        return new BCryptPasswordEncoder();
-            return new MessageDigestPasswordEncoder("MD5");
+            return new BCryptPasswordEncoder();
+//            return new MessageDigestPasswordEncoder("MD5");
     }
 
     /**
