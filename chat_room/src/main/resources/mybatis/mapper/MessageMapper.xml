@@ -38,8 +38,8 @@
   </select>
   <select id="queryMsgByPage" resultMap="ResultMapWithBLOBs">
       select * from messages
-      where M_FromUserID=#{from,jdbcType=VARCHAR}
-      and M_ToUserID=#{to,jdbcType=VARCHAR}
+      where ((M_FromUserID=#{from,jdbcType=VARCHAR} and M_ToUserID=#{to,jdbcType=VARCHAR})
+      or (M_FromUserID=#{to,jdbcType=VARCHAR} and M_ToUserID=#{from,jdbcType=VARCHAR}))
       and M_Time &lt; #{date,jdbcType=TIMESTAMP}
       order by M_Time desc
       limit 0, #{msgNum,jdbcType=INTEGER}

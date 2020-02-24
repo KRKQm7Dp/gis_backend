@@ -34,6 +34,7 @@ import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -106,6 +107,7 @@ public class ChatController {
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(map.get("timeStamp")),
                 Integer.parseInt(map.get("msgNum")));
         JSONArray jsonArray = new JSONArray();
+        Collections.reverse(msgs);
         msgs.forEach(msg -> {
             jsonArray.put(MsgUtils.msgToJson(msg));
         });
