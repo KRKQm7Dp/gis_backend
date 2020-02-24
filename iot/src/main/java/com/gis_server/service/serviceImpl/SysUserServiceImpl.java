@@ -39,11 +39,11 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public Pager getUserByPage(Integer pageNum, Integer pageSize) {
+    public Pager getUserByPage(Integer pageNum, Integer pageSize, String where) {
         Pager<SysUser> pager = new Pager<>();
         pager.setPage(pageNum);
         pager.setSize(pageSize);
-        List<SysUser> users = sysUserMapper.selectUserByPage((pageNum-1)*pageSize, pageSize);
+        List<SysUser> users = sysUserMapper.selectUserByPage((pageNum-1)*pageSize, pageSize, where);
         users.forEach(user -> {
             List<SysRole> roles = sysRoleService.findRoleListByULoginId(user.getuLoginid());
             user.setRoles(roles);

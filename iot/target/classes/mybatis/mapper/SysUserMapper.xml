@@ -73,6 +73,9 @@
     select
     <include refid="Base_Column_List" />
     from sys_user
+    <if test="where != null">
+      where U_LoginID like CONCAT(CONCAT('%', #{where}), '%')
+    </if>
     limit #{pageNum}, #{pageSize}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

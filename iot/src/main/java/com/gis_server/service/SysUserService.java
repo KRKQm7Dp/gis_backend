@@ -11,7 +11,7 @@ public interface SysUserService {
 
     List<SysUser> getAllUser();
 
-    Pager<SysUser> getUserByPage(Integer pageNum, Integer pageSize);
+    Pager<SysUser> getUserByPage(Integer pageNum, Integer pageSize, String where);
 
     Integer addUser(SysUser user);
 

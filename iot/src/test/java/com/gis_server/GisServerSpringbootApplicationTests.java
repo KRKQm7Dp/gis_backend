@@ -56,7 +56,7 @@ class GisServerSpringbootApplicationTests {
 
     @Test
     void getUserByPageTest(){
-        sysUserService.getUserByPage(1, 10);
+        sysUserService.getUserByPage(1, 10, "10");
     }
 
     @Test

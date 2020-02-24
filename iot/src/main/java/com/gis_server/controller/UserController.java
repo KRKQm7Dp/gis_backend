@@ -55,8 +55,9 @@ public class UserController {
     @GetMapping("/users")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public JsonResult getUserByPage(@RequestParam("pageNum") Integer pageNum,
-                                    @RequestParam("pageSize") Integer pageSize){
-        return ResultTool.success(sysUserService.getUserByPage(pageNum, pageSize));
+                                    @RequestParam("pageSize") Integer pageSize,
+                                    @RequestParam(value = "search", required = false) String where){
+        return ResultTool.success(sysUserService.getUserByPage(pageNum, pageSize, where));
     }
 
 //    @GetMapping("/getUser")

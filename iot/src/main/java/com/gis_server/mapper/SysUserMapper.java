@@ -19,7 +19,9 @@ public interface SysUserMapper {
 
     List<SysUser> selectAllUser();
 
-    List<SysUser> selectUserByPage(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    List<SysUser> selectUserByPage(@Param("pageNum") Integer pageNum,
+                                   @Param("pageSize") Integer pageSize,
+                                   @Param("where") String where);
 
     long countUser();
 
