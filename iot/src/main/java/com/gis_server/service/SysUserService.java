@@ -9,6 +9,8 @@ public interface SysUserService {
 
     SysUser findUserByLoginID(String uLoginid);
 
+    SysUser findUserById(Integer uId);
+
     List<SysUser> getAllUser();
 
     Pager<SysUser> getUserByPage(Integer pageNum, Integer pageSize, String where);

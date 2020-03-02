@@ -62,8 +62,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/oauth/**").permitAll()
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/api/routes").permitAll()
-                .antMatchers("/chat").permitAll()
-                .antMatchers("/css/**", "/emoji_plugin/**", "/head_img/**", "/img/**", "/js/**").permitAll()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

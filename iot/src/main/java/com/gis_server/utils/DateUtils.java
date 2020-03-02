@@ -2,7 +2,10 @@ package com.gis_server.utils;
 
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class DateUtils {
 
@@ -35,6 +38,10 @@ public class DateUtils {
      */
     public static String dateToStr(LocalDateTime time, String strFormat) {
         return time.format(DateTimeFormatter.ofPattern(strFormat));
+    }
+
+    public static Date strToDate(String strDate){
+        return Date.from(LocalDateTime.parse(strDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toInstant(ZoneOffset.UTC));
     }
 
 }

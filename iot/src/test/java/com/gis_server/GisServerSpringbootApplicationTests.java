@@ -8,6 +8,9 @@ import com.gis_server.pojo.SysPermission;
 import com.gis_server.service.SysPermissionService;
 import com.gis_server.service.SysRoleService;
 import com.gis_server.service.SysUserService;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -81,6 +86,15 @@ class GisServerSpringbootApplicationTests {
     void testRole() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         System.out.println(mapper.writeValueAsString(sysRoleMapper.selectRoleDtoByPage(0,3)));
+    }
+
+    @Test
+    void jsonObjectTest() throws JSONException, UnknownHostException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("userId", 1);
+        jsonObject.put("host", InetAddress.getLocalHost().getHostAddress());
+        jsonObject.put("port", 999);
+        System.out.println(StringEscapeUtils.unescapeJava(jsonObject.toString()));
     }
 
 

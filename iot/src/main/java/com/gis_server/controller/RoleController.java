@@ -3,7 +3,6 @@ package com.gis_server.controller;
 import com.gis_server.common.entity.JsonResult;
 import com.gis_server.common.utils.ResultTool;
 import com.gis_server.dto.RoleDto;
-import com.gis_server.pojo.SysRole;
 import com.gis_server.service.SysPermissionService;
 import com.gis_server.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;

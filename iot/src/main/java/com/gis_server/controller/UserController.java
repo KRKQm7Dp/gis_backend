@@ -4,6 +4,7 @@ import com.gis_server.common.entity.JsonResult;
 import com.gis_server.common.entity.Pager;
 import com.gis_server.common.utils.ResultTool;
 import com.gis_server.pojo.SysUser;
+import com.gis_server.service.SysRoleService;
 import com.gis_server.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.AccessType;
@@ -38,9 +39,14 @@ public class UserController {
     @Autowired
     SysUserService sysUserService;
 
+    @Autowired
+    SysRoleService sysRoleService;
+
     @GetMapping("/user/info")
     public JsonResult getUserInfo(Principal principal){
-        return ResultTool.success(principal);
+        SysUser user = sysUserService.findUserByLoginID(principal.getName());
+        user.setRoles(sysRoleService.findRoleListByULoginId(principal.getName()));
+        return ResultTool.success(user);
     }
 
 //    @RequestMapping(value = "getAllUser", method = RequestMethod.GET)
