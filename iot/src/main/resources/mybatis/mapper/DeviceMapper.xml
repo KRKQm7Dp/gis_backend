@@ -28,6 +28,12 @@
     from devices
     where name = #{name}
   </select>
+  <select id="selectAllDevices" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from devices
+    where user_id = #{userId}
+  </select>
   <select id="selectByPage" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

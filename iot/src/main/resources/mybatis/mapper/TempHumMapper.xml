@@ -19,6 +19,22 @@
     from temp_hum
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectLastByDeviceId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from temp_hum
+    where device_id = #{deviceId}
+    order by time desc
+    limit 1
+  </select>
+  <select id="selectByDeviceId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from temp_hum
+    where device_id = #{deviceId,jdbcType=INTEGER}
+    order by time desc
+    limit #{size,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from temp_hum
     where id = #{id,jdbcType=INTEGER}

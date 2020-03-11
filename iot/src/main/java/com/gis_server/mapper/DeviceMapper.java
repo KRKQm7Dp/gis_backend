@@ -22,6 +22,8 @@ public interface DeviceMapper {
                             @Param("pageSize") Integer pageSize,
                               @Param("search") String search);
 
+    List<Device> selectAllDevices(@Param("userId") Integer uId);
+
     Long countByUserId(@Param("userId") Integer uId);
 
     int updateByPrimaryKeySelective(Device record);

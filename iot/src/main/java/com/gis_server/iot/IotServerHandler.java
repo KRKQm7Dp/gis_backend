@@ -16,11 +16,16 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class IotServerHandler extends SimpleChannelInboundHandler<String> {
 
     private static final Logger logger = LoggerFactory.getLogger(IotServerHandler.class);
 
-    public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+//    public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+
+    public static Map<Integer, Channel> channelMap = new ConcurrentHashMap<>();
 
     private DeviceService deviceService = (DeviceService) SpringUtil.getBean("deviceService");
 
@@ -36,11 +41,11 @@ public class IotServerHandler extends SimpleChannelInboundHandler<String> {
      */
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-        Channel incoming = ctx.channel();
-        for (Channel channel : channels) {
-            channel.writeAndFlush("[SERVER] - " + incoming.remoteAddress() + " 加入\n");
-        }
-        channels.add(ctx.channel());
+//        Channel incoming = ctx.channel();
+//        for (Channel channel : channels) {
+//            channel.writeAndFlush("[SERVER] - " + incoming.remoteAddress() + " 加入\n");
+//        }
+//        channels.add(ctx.channel());
     }
 
     /**
@@ -50,11 +55,11 @@ public class IotServerHandler extends SimpleChannelInboundHandler<String> {
      */
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
-        Channel incoming = ctx.channel();
-        for (Channel channel : channels) {
-            channel.writeAndFlush("[SERVER] - " + incoming.remoteAddress() + " 离开\n");
-        }
-        channels.remove(ctx.channel());
+//        Channel incoming = ctx.channel();
+//        for (Channel channel : channels) {
+//            channel.writeAndFlush("[SERVER] - " + incoming.remoteAddress() + " 离开\n");
+//        }
+//        channels.remove(ctx.channel());
     }
 
     /**
@@ -72,8 +77,9 @@ public class IotServerHandler extends SimpleChannelInboundHandler<String> {
         JsonNode jsonNode = objectMapper.readTree(s);
         if(jsonNode.has("type") && Integer.valueOf(jsonNode.get("type").toString()) == IotServerHandler.RECV_DEVICE_BASIC_INFO){
             if(jsonNode.has("data")){
-                Device device = deviceService.selectByName(jsonNode.findValue("name").asText());
+                Device device = deviceService.selectById(jsonNode.findValue("id").asInt());
                 if(device != null){
+                    channelMap.put(device.getId(), incoming);
                     Device recvDevice = objectMapper.readValue(jsonNode.get("data").toString(), Device.class);
                     recvDevice.setId(device.getId());
                     deviceService.updateDevice(recvDevice);

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service("deviceService")
 @Transactional
 public class DeviceServiceImpl implements DeviceService {
@@ -44,8 +46,18 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
+    public List<Device> selectAllDevices(Integer uId) {
+        return deviceMapper.selectAllDevices(uId);
+    }
+
+    @Override
     public Device selectByName(String name) {
         return deviceMapper.selectByName(name);
+    }
+
+    @Override
+    public Device selectById(Integer id) {
+        return deviceMapper.selectByPrimaryKey(id);
     }
 
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service("tempHumService")
 @Transactional
 public class TempHumServiceImpl implements TempHumService {
@@ -18,4 +20,16 @@ public class TempHumServiceImpl implements TempHumService {
     public int insertTempHum(TempHum tempHum) {
         return tempHumMapper.insertSelective(tempHum);
     }
+
+    @Override
+    public List<TempHum> getTempHumListByDeviceId(Integer deviceId, Integer size) {
+        return tempHumMapper.selectByDeviceId(deviceId, size);
+    }
+
+    @Override
+    public TempHum getLastTempHumByDeviceId(Integer deviceId) {
+        return tempHumMapper.selectLastByDeviceId(deviceId);
+    }
+
+
 }
