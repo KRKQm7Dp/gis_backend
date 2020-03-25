@@ -33,12 +33,15 @@ public class LoginController {
     @Value("${auth-server}")
     private String auth_server;
 
+    @Value("${chat-server}")
+    private String chat_server;
+
     @GetMapping("/login")
     public void login(HttpServletRequest req,
                         HttpServletResponse resp) throws IOException {
         String webAuthUrl = String.format(auth_server + "/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=ROLE_ADMIN",
                 "c1",
-                "http://localhost:8082/chat/callback");
+                chat_server+"/chat/callback");
         System.out.println(webAuthUrl);
         resp.sendRedirect(webAuthUrl);
     }
@@ -55,7 +58,7 @@ public class LoginController {
         params.add(new BasicNameValuePair("client_secret", "secret"));
         params.add(new BasicNameValuePair("grant_type", "authorization_code"));
         params.add(new BasicNameValuePair("code", code));
-        params.add(new BasicNameValuePair("redirect_uri", "http://localhost:8082/chat/callback"));
+        params.add(new BasicNameValuePair("redirect_uri", chat_server+"/chat/callback"));
         httpPost.setEntity(new UrlEncodedFormEntity(params));
         CloseableHttpResponse response = httpClient.execute(httpPost);
 

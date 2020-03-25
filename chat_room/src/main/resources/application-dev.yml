@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: dev
+auth-server: http://localhost:8080
+chat-server: http://localhost:8082
+fastdfs-nginx-module-host: http://39.107.125.189:80

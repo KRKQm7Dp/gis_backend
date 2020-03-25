@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: prod
+auth-server: http://39.107.125.189:8080
+chat-server: http://39.107.125.189:8082

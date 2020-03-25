@@ -97,15 +97,14 @@ public class DeviceController {
     }
 
     @GetMapping("/send")
-    public JsonResult send(@RequestBody Map<String, String> msg){
-        System.out.println("发送消息: " + msg.get("toDeviceId"));
-        System.out.println("发送消息: " + msg.get("data"));
+    public JsonResult send(@RequestParam(value = "toDeviceId") Integer toDeviceId,
+                           @RequestParam(value = "data") String data){
         Map channelMap = IotServerHandler.channelMap;
         Iterator<Map.Entry<Integer, Channel>> iterator = channelMap.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<Integer, Channel> entry = iterator.next();
-            if (entry.getKey() == Integer.valueOf(msg.get("toDeviceId"))) {
-                entry.getValue().writeAndFlush(msg.get("data"));
+            if (entry.getKey() == toDeviceId) {
+                entry.getValue().writeAndFlush(data);
             }
         }
         return ResultTool.success("ok");

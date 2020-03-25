@@ -150,8 +150,8 @@ $(window).unload(function(){
 var msgArray = [];  // 定义未读消息队列，存放消息 JSON 对象
 var hisArray = [];  // 定义历史消息队列，存放消息 JSON 对象
 var websocket=null;
-var addr = 'localhost';  // 服务器 ip
-// var addr = '192.168.43.16';  // 服务器 ip
+// var addr = '39.107.125.189';  // 服务器 ip
+var addr = '192.168.43.16';  // 服务器 ip
 var port = '8082';           // 端口号
 var url = 'ws://'+ addr +':'+ port +'/chat/chat/' + loginedUserID;  // webSocket 连接地址
 function initConnection(){
@@ -434,6 +434,10 @@ function sendImgFile(toUserLoginID){
         //发送二进制表示的文件
         websocket.send(JSON.stringify(msg));
         console.log('发送文件数据结束');
+
+        hisArray = getLocalStorage(LOCALSTORAGE_READ);
+        hisArray.push(msg);
+        saveLocalStorage(JSON.stringify(hisArray), LOCALSTORAGE_READ);
     }
     inputElement.outerHTML=inputElement.outerHTML; //清空<input type="file">的值
 }
@@ -463,7 +467,7 @@ function sendAddFriendReq() {
 }
 
 /**
- * 将接收到的图片消息显示到聊天框中
+ * 将发送的图片消息显示到聊天框中
  * @param msg
  */
 function addSentImgMsg(msg){
@@ -472,7 +476,7 @@ function addSentImgMsg(msg){
 }
 
 /**
- * 将发送的图片消息显示到聊天框中
+ * 将接收到的图片消息显示到聊天框中
  * @param msg
  */
 function addRecievedImgMsg(msg){

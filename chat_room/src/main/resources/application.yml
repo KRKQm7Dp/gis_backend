@@ -27,7 +27,6 @@ mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: com.gis_server.pojo
 
-auth-server: http://localhost:8080
 #
 #security:
 #  oauth2:

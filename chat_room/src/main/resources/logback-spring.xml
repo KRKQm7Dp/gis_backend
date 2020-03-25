@@ -2,7 +2,7 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 
     <!-- 日志根目录-->
-    <springProperty scope="context" name="LOG_HOME" source="logging.path" defaultValue="/lhy/logs"/>
+    <springProperty scope="context" name="LOG_HOME" source="logging.path" defaultValue="/lhy/logs/chat_room"/>
 
     <!-- 日志级别 -->
     <springProperty scope="context" name="LOG_ROOT_LEVEL" source="logging.level.root" defaultValue="DEBUG"/>

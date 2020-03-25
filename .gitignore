@@ -1,5 +1,10 @@
 HELP.md
 /target/
+/jars/
+/LOG_HOME_IS_UNDEFINED/
+/chat_room/target/
+/iot/target/
+/uaa/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###

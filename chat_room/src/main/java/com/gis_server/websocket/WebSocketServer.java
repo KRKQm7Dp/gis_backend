@@ -2,6 +2,7 @@ package com.gis_server.websocket;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gis_server.config.FastDFSConfig;
 import com.gis_server.config.HttpSessionConfig;
 import com.gis_server.pojo.Message;
 import com.gis_server.pojo.SysUser;
@@ -52,6 +53,13 @@ public class WebSocketServer {
     private SysUser user;
     private ObjectMapper mapper = new ObjectMapper();
     private static String context_path = "/chat"; // 和配置文件中 context-path 相同
+
+    public static String fastdfs_nginx_module_host;
+
+    @Value("${fastdfs-nginx-module-host}")
+    public void setFastdfs_nginx_module_host(String host) {
+        fastdfs_nginx_module_host = host;
+    }
 
     private UserService userService = (UserService) SpringUtil.getBean("userService");
 
@@ -223,37 +231,41 @@ public class WebSocketServer {
             byte[] bytes = d.decodeBuffer(imgStr.split(",")[1]);  // 文件中数据
 
             if ("image".equals(fileType)){
-                StringBuilder filePath = new StringBuilder();
-                String rootPath = ResourceUtils.getURL("classpath:").getPath();
-                System.out.println("rootPath=" + rootPath);
-                filePath.append(rootPath)
-                        .append("static/")
-                        .append("users/")
-                        .append(this.user.getuLoginid())
-                        .append("/msg_img/")
-                        .append(DateUtils.getNow("yyyyMMddHHmmss"))
-                        .append(".")
-                        .append(fileFormat);
-                File file = new File(filePath.toString());
-                File fileDir = file.getParentFile();
-                if(!fileDir.exists()){
-                    fileDir.mkdirs();  // 表示如果当前目录不存在就创建，包括所有必须的父目录
-                }
-                if(!file.exists()){
-                    file.createNewFile();
-                }
-                FileOutputStream fs = new FileOutputStream(file, true);
-                fs.write(bytes);
-                fs.flush();
-                fs.close();
-                logger.info("接收到图片消息，已保存到：" + filePath);
+//                StringBuilder filePath = new StringBuilder();
+//                String rootPath = ResourceUtils.getURL("classpath:").getPath();
+//                System.out.println("rootPath=" + rootPath);
+//                filePath.append(rootPath)
+//                        .append("static/")
+//                        .append("users/")
+//                        .append(this.user.getuLoginid())
+//                        .append("/msg_img/")
+//                        .append(DateUtils.getNow("yyyyMMddHHmmss"))
+//                        .append(".")
+//                        .append(fileFormat);
+//                File file = new File(filePath.toString());
+//                File fileDir = file.getParentFile();
+//                if(!fileDir.exists()){
+//                    fileDir.mkdirs();  // 表示如果当前目录不存在就创建，包括所有必须的父目录
+//                }
+//                if(!file.exists()){
+//                    file.createNewFile();
+//                }
+//                FileOutputStream fs = new FileOutputStream(file, true);
+//                fs.write(bytes);
+//                fs.flush();
+//                fs.close();
+//                logger.info("接收到图片消息，已保存到：" + filePath);
+//
+//                Pattern pattern2 = Pattern.compile("(?=/users).*");
+//                Matcher matcher2 = pattern2.matcher(filePath);
+//                if(matcher2.find()){
+//                    System.out.println("==========" + context_path + matcher2.group());
+//                    return context_path + matcher2.group();
+//                }
+                String filePath = FastDFSConfig.upload(bytes, fileFormat);
+                logger.info("接收到图片消息，已保存到：" + WebSocketServer.fastdfs_nginx_module_host + "/" + filePath);
+                return WebSocketServer.fastdfs_nginx_module_host + "/" + filePath;
 
-                Pattern pattern2 = Pattern.compile("(?=/users).*");
-                Matcher matcher2 = pattern2.matcher(filePath);
-                if(matcher2.find()){
-                    System.out.println("==========" + context_path + matcher2.group());
-                    return context_path + matcher2.group();
-                }
             }
 
             return null;
@@ -306,6 +318,5 @@ public class WebSocketServer {
         logger.info("========= error ==========");
         throwalble.printStackTrace();
     }
-
 
 }
