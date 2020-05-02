@@ -11,7 +11,7 @@
 
     <artifactId>chat_room</artifactId>
 
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -135,12 +135,12 @@
     </dependencies>
 
     <build>
-        <finalName>chat</finalName>
+        <!--<finalName>chat</finalName>-->
         <plugins>
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.0.0</version>
-            </plugin>
+            <!--<plugin>-->
+                <!--<artifactId>maven-war-plugin</artifactId>-->
+                <!--<version>3.0.0</version>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

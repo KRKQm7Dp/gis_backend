@@ -150,8 +150,7 @@ $(window).unload(function(){
 var msgArray = [];  // 定义未读消息队列，存放消息 JSON 对象
 var hisArray = [];  // 定义历史消息队列，存放消息 JSON 对象
 var websocket=null;
-// var addr = '39.107.125.189';  // 服务器 ip
-var addr = '192.168.43.16';  // 服务器 ip
+var addr = '39.107.125.189';  // 服务器 ip
 var port = '8082';           // 端口号
 var url = 'ws://'+ addr +':'+ port +'/chat/chat/' + loginedUserID;  // webSocket 连接地址
 function initConnection(){

@@ -3,3 +3,4 @@ spring:
     active: prod
 auth-server: http://39.107.125.189:8080
 chat-server: http://39.107.125.189:8082
+fastdfs-nginx-module-host: http://39.107.125.189:80
