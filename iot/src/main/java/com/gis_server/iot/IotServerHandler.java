@@ -16,6 +16,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.SocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,6 +27,8 @@ public class IotServerHandler extends SimpleChannelInboundHandler<String> {
 //    public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     public static Map<Integer, Channel> channelMap = new ConcurrentHashMap<>();
+
+    public static Map<SocketAddress, Integer> addrMap = new ConcurrentHashMap<>();
 
     private DeviceService deviceService = (DeviceService) SpringUtil.getBean("deviceService");
 
@@ -80,6 +83,7 @@ public class IotServerHandler extends SimpleChannelInboundHandler<String> {
                 Device device = deviceService.selectById(jsonNode.findValue("id").asInt());
                 if(device != null){
                     channelMap.put(device.getId(), incoming);
+                    addrMap.put(incoming.remoteAddress(), device.getId());
                     Device recvDevice = objectMapper.readValue(jsonNode.get("data").toString(), Device.class);
                     recvDevice.setId(device.getId());
                     deviceService.updateDevice(recvDevice);
@@ -112,11 +116,21 @@ public class IotServerHandler extends SimpleChannelInboundHandler<String> {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         Channel incoming = ctx.channel();
+        Integer deviceId = addrMap.get(incoming.remoteAddress());
+        Device device = new Device();
+        device.setId(deviceId);
+        device.setStatus(false);
+        deviceService.updateDevice(device);
         logger.info("IotDevice:"+incoming.remoteAddress()+"掉线");
     }
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         Channel incoming = ctx.channel();
+        Integer deviceId = addrMap.get(incoming.remoteAddress());
+        Device device = new Device();
+        device.setId(deviceId);
+        device.setStatus(false);
+        deviceService.updateDevice(device);
         logger.info("IotDevice:"+incoming.remoteAddress()+"异常");
         // 当出现异常就关闭连接
         cause.printStackTrace();
